@@ -1,7 +1,7 @@
 import random
 
 def play_game():
-    print("\n🎯 Welcome to the Number Guessing Game!")
+    print("\nWelcome to the Number Guessing Game!")
     print("I'm thinking of a number between 1 and 100.")
 
     number = random.randint(1, 100)
@@ -17,18 +17,18 @@ def play_game():
             elif guess > number:
                 print("Too high! Try again.")
             else:
-                print(f"🎉 Correct! You guessed it in {attempts} attempts.")
+                print(f"Correct! You guessed it in {attempts} attempts.")
                 break
 
         except ValueError:
-            print("⚠️ Please enter a valid number.")
+            print("Please enter a valid number.")
 
 def main():
     while True:
         play_game()
         again = input("\nDo you want to play again? (y/n): ").lower()
         if again != 'y':
-            print("👋 Thanks for playing!")
+            print("Thanks for playing!")
             break
 
 if __name__ == "__main__":
