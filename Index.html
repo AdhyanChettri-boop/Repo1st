@@ -1,251 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Nightmare Game</title>
-<style>
-    body {
-        background-color: black;
-        color: #00ffcc;
-        font-family: monospace;
-        text-align: center;
-    }
-    #game {
-        width: 600px;
-        margin: auto;
-        padding: 20px;
-    }
-    button {
-        margin: 5px;
-        padding: 10px;
-        background: #111;
-        color: #00ffcc;
-        border: 1px solid #00ffcc;
-        cursor: pointer;
-    }
-    input {
-        padding: 8px;
-        background: #111;
-        color: #00ffcc;
-        border: 1px solid #00ffcc;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+        }
+
+        header {
+            background: #161b22;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #58a6ff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: #161b22;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+        }
+
+        h2 {
+            color: #58a6ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #30363d;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #238636;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #2ea043;
+        }
+    </style>
 </head>
 <body>
 
-<div id="game">
-    <h1>Welcome to the Nightmare</h1>
-    <div id="output"></div>
-    <div id="choices"></div>
+<header>
+    <h1>Your Name</h1>
+    <p>Beginner Developer | HTML Learner | Future Engineer</p>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div id="about" class="card">
+        <h2>About Me</h2>
+        <p>
+            Hi! My name is Adhyan Chettri and I'm a beginner web developer learning HTML, CSS, and programming.
+            I enjoy building simple projects and improving my skills every day.
+        </p>
+    </div>
+
+    <div id="projects" class="card">
+        <h2>Projects</h2>
+        <p>Here are some of my projects:</p>
+        <ul>
+            <li>🔹 Project 1 - Coming soon</li>
+            <li>🔹 Project 2 - Coming soon</li>
+            <li>🔹 Project 3 - Coming soon</li>
+        </ul>
+        <a href="https://github.com/AdhyanChettri-boop" class="btn" target="_blank">
+            View My GitHub
+        </a>
+    </div>
+
+    <div id="contact" class="card">
+        <h2>Contact</h2>
+        <p>Email: adhyanchettri83@gmail.com</p>
+        <p>
+            Connect with me on GitHub or other platforms!
+        </p>
+    </div>
+
 </div>
 
-<script>
-class Player {
-    constructor(name) {
-        this.name = name;
-        this.health = 100;
-        this.sanity = 100;
-        this.inventory = [];
-        this.location = null;
-    }
-}
-
-class Enemy {
-    constructor(name, dialogues, damageRange, sanityDamage) {
-        this.name = name;
-        this.dialogues = dialogues;
-        this.damageRange = damageRange;
-        this.sanityDamage = sanityDamage;
-    }
-
-    speak(playerName) {
-        let line = this.dialogues[Math.floor(Math.random() * this.dialogues.length)];
-        return line.replace("{name}", playerName);
-    }
-
-    attack(player) {
-        let dmg = Math.floor(Math.random() * (this.damageRange[1] - this.damageRange[0] + 1)) + this.damageRange[0];
-        player.health -= dmg;
-        player.sanity -= this.sanityDamage;
-        return `You lost ${dmg} health and ${this.sanityDamage} sanity!`;
-    }
-}
-
-let player;
-let enemies = [
-    new Enemy("Whispering Widow", [
-        "Every step you take… I remember",
-        "Leaving already {name}? That never works",
-        "You’ve been here before",
-        "Say it out loud {name}. I’m listening",
-        "I wore your face once"
-    ], [5,15], 10),
-
-    new Enemy("Crooked Child", [
-        "Slow down… or don’t",
-        "If you don’t look at me, I’ll move",
-        "I’m closer now",
-        "Don’t blink {name}",
-        "You already lost once"
-    ], [3,10], 15)
-];
-
-const output = document.getElementById("output");
-const choices = document.getElementById("choices");
-
-function print(text) {
-    output.innerHTML += `<p>${text}</p>`;
-}
-
-function clearChoices() {
-    choices.innerHTML = "";
-}
-
-function addButton(text, action) {
-    let btn = document.createElement("button");
-    btn.innerText = text;
-    btn.onclick = action;
-    choices.appendChild(btn);
-}
-
-function startGame() {
-    output.innerHTML = "";
-    clearChoices();
-
-    output.innerHTML = `<input id="nameInput" placeholder="Enter your name">
-    <button onclick="begin()">Start</button>`;
-}
-
-function begin() {
-    let name = document.getElementById("nameInput").value || "Player";
-    player = new Player(name);
-
-    output.innerHTML = "";
-    print(`Welcome, ${player.name}...`);
-    mainLoop();
-}
-
-function mainLoop() {
-    if (player.health <= 0 || player.sanity <= 0) {
-        print("Game Over.");
-        clearChoices();
-        return;
-    }
-
-    chooseLocation();
-}
-
-function chooseLocation() {
-    clearChoices();
-    print("Where do you want to go?");
-
-    addButton("Forest", () => {
-        player.location = "Forest";
-        print("You enter the Forest...");
-        randomEvent();
-    });
-
-    addButton("Abandoned House", () => {
-        player.location = "House";
-        print("You enter the Abandoned House...");
-        randomEvent();
-    });
-}
-
-function randomEvent() {
-    let events = ["enemy", "item", "nothing"];
-    let event = events[Math.floor(Math.random() * events.length)];
-
-    if (event === "enemy") encounterEnemy();
-    else if (event === "item") findItem();
-    else {
-        print("...Nothing happens. But you feel watched.");
-        mainLoop();
-    }
-}
-
-function encounterEnemy() {
-    clearChoices();
-
-    let enemy = enemies[Math.floor(Math.random() * enemies.length)];
-
-    print(`A ${enemy.name} appears!`);
-    print(enemy.speak(player.name));
-
-    addButton("Fight", () => fight(enemy));
-    addButton("Run", () => {
-        if (Math.random() > 0.5) {
-            print("You escaped...");
-            mainLoop();
-        } else {
-            print("You failed to escape!");
-            print(enemy.attack(player));
-            mainLoop();
-        }
-    });
-}
-
-function fight(enemy) {
-    clearChoices();
-
-    print("Choose action:");
-
-    addButton("Attack", () => {
-        let dmg = Math.floor(Math.random() * 16) + 5;
-        print(`You hit the ${enemy.name} for ${dmg} damage!`);
-        print(`${enemy.name} vanishes into the dark...`);
-        mainLoop();
-    });
-
-    addButton("Use Item", () => useItem(enemy));
-
-    addButton("Do Nothing", () => {
-        print("You hesitate...");
-        print(enemy.attack(player));
-        mainLoop();
-    });
-}
-
-function findItem() {
-    let items = ["medkit", "pills", "knife"];
-    let item = items[Math.floor(Math.random() * items.length)];
-
-    player.inventory.push(item);
-    print(`You found a ${item}!`);
-    mainLoop();
-}
-
-function useItem(enemy) {
-    clearChoices();
-
-    if (player.inventory.length === 0) {
-        print("You have nothing!");
-        fight(enemy);
-        return;
-    }
-
-    print("Choose item:");
-
-    player.inventory.forEach(item => {
-        addButton(item, () => {
-            if (item === "medkit") {
-                player.health += 20;
-                print("You regained health!");
-            } else if (item === "pills") {
-                player.sanity += 20;
-                print("Your mind stabilizes...");
-            } else {
-                print("You feel safer... (no effect 👀)");
-            }
-
-            player.inventory = player.inventory.filter(i => i !== item);
-            fight(enemy);
-        });
-    });
-}
-
-startGame();
-</script>
+<footer>
+    <p>© 2026 Adhyan | Built with HTML & CSS</p>
+</footer>
 
 </body>
 </html>
